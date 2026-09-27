@@ -1,0 +1,22 @@
+{
+  "name": "@wake/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "wake": "./dist/index.js"
+  },
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "dependencies": {
+    "@wake/api": "*",
+    "@wake/core": "*",
+    "@wake/engine": "*",
+    "@wake/store": "*",
+    "ink": "^7.1.1",
+    "react": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0"
+  }
+}

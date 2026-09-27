@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Header } from "@/components/layouts";
-import { Hero } from "@/components/sections";
+import { Header, Footer } from "@/components/layouts";
+import { Hero, NetworkSection } from "@/components/sections";
 import { InstallModal, DocsModal } from "@/components/modals";
 
 export default function Home() {
@@ -17,11 +17,17 @@ export default function Home() {
         onOpenDocs={() => setDocsModalOpen(true)}
       />
 
-      {/* 2. Main content area (Hero fits 1st screen on desktop, seamlessly scrollable when additional sections are added below) */}
+      {/* 2. Main content area (Hero fits 1st screen on desktop, seamlessly scrollable into Network visualization demo) */}
       <main className="flex-1 flex flex-col w-full">
         <Hero onOpenInstall={() => setInstallModalOpen(true)} />
-        {/* Future sections can be added here and will be scrolled to naturally */}
+        <NetworkSection />
       </main>
+
+      {/* 3. Modern Technical Footer (Zero AI slop, fully wired functional links) */}
+      <Footer
+        onOpenInstall={() => setInstallModalOpen(true)}
+        onOpenDocs={() => setDocsModalOpen(true)}
+      />
 
       {/* Accessible Modals */}
       <InstallModal

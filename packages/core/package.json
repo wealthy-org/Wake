@@ -1,0 +1,12 @@
+{
+  "name": "@wake/core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "@envio-dev/hypersync-client": "1.0.0",
+    "viem": "^2.23.0",
+    "zod": "^3.24.2"
+  }
+}

@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from "react";
 import { GitHubIcon } from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Play, ArrowDown } from "lucide-react";
 import { cn } from "cn";
 
 interface HeroProps {
@@ -13,6 +14,13 @@ interface HeroProps {
 export function Hero({ onOpenInstall }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const rafId = useRef<number | null>(null);
+
+  const handleScrollToDemo = () => {
+    const demoElement = document.getElementById("network-demo");
+    if (demoElement) {
+      demoElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -84,7 +92,7 @@ export function Hero({ onOpenInstall }: HeroProps) {
 
       {/* Hero Content Container - Vertically centered */}
       <div className="relative z-10 w-full max-w-[860px] mx-auto text-center flex flex-col items-center animate-wake-in my-auto">
-        
+
         {/* Eyebrow Badge (shadcn UI Badge) */}
         <Badge
           variant="outline"
@@ -117,6 +125,19 @@ export function Hero({ onOpenInstall }: HeroProps) {
             className="w-full sm:w-auto rounded-lg bg-zinc-950 hover:bg-black text-white font-medium shadow-2xs hover:shadow-xs hover:-translate-y-[1px] active:translate-y-0 transition-all duration-200 ease-out h-11 px-6 cursor-pointer border border-zinc-900"
           >
             Install Wake
+          </Button>
+
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={handleScrollToDemo}
+            className="w-full sm:w-auto rounded-lg bg-white/80 hover:bg-white hover:border-zinc-400 text-zinc-900 border-zinc-300 font-medium shadow-2xs hover:shadow-xs hover:-translate-y-[1px] active:translate-y-0 transition-all duration-200 ease-out h-11 px-5 cursor-pointer gap-2 group"
+          >
+            <span className="flex items-center justify-center size-5 rounded-full bg-amber-500/10 text-amber-700 group-hover:bg-amber-500/20 group-hover:scale-105 transition-all">
+              <Play className="size-2.5 fill-current ml-0.5" />
+            </span>
+            <span>Watch Demo</span>
+            <ArrowDown className="size-3.5 text-zinc-400 group-hover:text-zinc-700 group-hover:translate-y-0.5 transition-transform" />
           </Button>
 
           <a

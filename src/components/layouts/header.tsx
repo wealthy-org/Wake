@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { WakeLogo, GitHubIcon } from "@/components/icons";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,13 +19,13 @@ export function Header({ onOpenInstall, onOpenDocs }: HeaderProps) {
       <div className="mx-auto flex h-16 sm:h-20 max-w-[1200px] items-center justify-between px-6 sm:px-8">
         {/* Left: Simply Wake */}
         <div className="flex items-center">
-          <a
+          <Link
             href="/"
             className="flex items-center transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-zinc-950 focus-visible:outline-offset-4 rounded-md"
             aria-label="Wake Home"
           >
             <WakeLogo />
-          </a>
+          </Link>
         </div>
 
         {/* Right: Docs, GitHub, Install Wake */}
