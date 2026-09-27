@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wake
 
-## Getting Started
+See where capital moves on Robinhood Chain.
 
-First, run the development server:
+Wake is a local-first on-chain observation tool for Robinhood Chain.
+It runs on your own computer and lets you observe wallet rotations,
+token flows, network activity, and related on-chain evidence.
+
+## Features
+
+- Inflow
+- Coin Flow
+- Network visualization
+- Wallet Watchlist
+- Rotation detection
+- Alerts
+- Track Record
+- On-chain evidence
+- Sample, Replay, and Live modes
+- 2D and 3D network views
+
+## How It Works
+
+Wake observes public on-chain activity and presents the observed
+sequence of transactions.
+
+Wake does not claim ownership, intent, causality, or private
+information that cannot be established from the available data.
+
+## Requirements
+
+- Node.js 22+
+- npm
+
+Optional:
+
+- Hypersync token
+- X/Twitter API credentials
+
+Wake can run on public RPC without external API keys.
+
+## Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+git clone https://github.com/wealthy-org/Wake.git
+cd wake
+npm install
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Attribution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Wake is a TypeScript port of STAMPEDE
+(https://github.com/Argona7/stampede), used with permission
+from its original author.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `docs/PERMISSION.md` for permission and attribution details.
