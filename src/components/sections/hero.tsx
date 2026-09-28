@@ -1,164 +1,119 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import { GitHubIcon } from "@/components/icons";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Play, ArrowDown } from "lucide-react";
-import { cn } from "cn";
+import React from "react";
+import { ArrowDown, Play, Terminal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { HeroNetwork } from "@/components/sections/hero-network";
 
-interface HeroProps {
-  onOpenInstall: () => void;
-}
-
-export function Hero({ onOpenInstall }: HeroProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const rafId = useRef<number | null>(null);
-
-  const handleScrollToDemo = () => {
-    const demoElement = document.getElementById("network-demo");
-    if (demoElement) {
-      demoElement.scrollIntoView({ behavior: "smooth", block: "start" });
+export function Hero() {
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    // Disable cursor reactivity on touch-only devices
-    if (window.matchMedia("(hover: none)").matches) return;
-
-    const handlePointerMove = (e: PointerEvent) => {
-      if (e.pointerType === "touch") return;
-
-      if (rafId.current !== null) {
-        cancelAnimationFrame(rafId.current);
-      }
-
-      rafId.current = requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        el.style.setProperty("--mouse-x", `${x}px`);
-        el.style.setProperty("--mouse-y", `${y}px`);
-        el.style.setProperty("--mouse-active", "1");
-      });
-    };
-
-    const handlePointerLeave = () => {
-      if (rafId.current !== null) {
-        cancelAnimationFrame(rafId.current);
-      }
-      el.style.setProperty("--mouse-active", "0");
-    };
-
-    el.addEventListener("pointermove", handlePointerMove, { passive: true });
-    el.addEventListener("pointerleave", handlePointerLeave, { passive: true });
-
-    return () => {
-      if (rafId.current !== null) {
-        cancelAnimationFrame(rafId.current);
-      }
-      el.removeEventListener("pointermove", handlePointerMove);
-      el.removeEventListener("pointerleave", handlePointerLeave);
-    };
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
-      aria-label="Hero Introduction"
-      className="relative w-full min-h-[calc(100dvh-4rem)] sm:min-h-[calc(100dvh-5rem)] flex flex-col justify-center items-center overflow-hidden wake-grid-pattern px-6 sm:px-8 py-10 sm:py-14 md:py-10 lg:py-12"
+      id="hero"
+      aria-label="Product Introduction"
+      className="relative w-full min-h-[calc(100svh-4rem)] flex flex-col justify-center items-center overflow-hidden wake-grid-pattern px-5 sm:px-8 py-10 sm:py-16 md:py-20 border-b border-zinc-200/80"
     >
-      {/* 1. Base subtle ambient radial lighting */}
+      {/* Background radial gradient mask */}
       <div
         className="pointer-events-none absolute inset-0 wake-ambient-radial wake-grid-mask select-none"
         aria-hidden="true"
       />
 
-      {/* 2. Soft Cursor Light: Subtle radial highlight illuminating the technical surface */}
-      <div
-        className="pointer-events-none absolute inset-0 wake-cursor-light select-none"
-        aria-hidden="true"
-      />
+      {/* Ambient on-chain observation network sitting behind documentation */}
+      <HeroNetwork />
 
-      {/* 3. Cursor-Reactive Grid Overlay: Grid lines near cursor become slightly clearer */}
-      <div
-        className="pointer-events-none absolute inset-0 wake-grid-reactive select-none"
-        aria-hidden="true"
-      />
-
-      {/* Hero Content Container - Vertically centered */}
-      <div className="relative z-10 w-full max-w-[860px] mx-auto text-center flex flex-col items-center animate-wake-in my-auto">
-
-        {/* Eyebrow Badge (shadcn UI Badge) */}
-        <Badge
-          variant="outline"
-          className="font-mono text-[11px] sm:text-xs font-medium tracking-[0.2em] text-zinc-500 uppercase px-3 py-1 border-zinc-200/80 bg-white/70 shadow-2xs mb-4 sm:mb-6 rounded-full"
+      <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col items-center text-center">
+        {/* REFINED LOCAL RUNTIME STATUS PANEL */}
+        <div
+          role="status"
+          aria-label="Local Runtime Status"
+          className="w-full max-w-2xl border border-zinc-200/90 bg-white/95 rounded-lg p-3 sm:py-2.5 sm:px-4 text-left shadow-2xs mb-6 sm:mb-8"
         >
-          LOCAL-FIRST ON-CHAIN OBSERVATION
-        </Badge>
+          {/* Header & Localhost Badge */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-600 shrink-0" aria-hidden="true" />
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider text-zinc-800 uppercase">
+                LOCAL INSTANCE
+              </span>
+            </div>
+            <span className="font-mono text-[10px] text-zinc-500 bg-zinc-100 border border-zinc-200/80 px-1.5 py-0.5 rounded tracking-tight select-all">
+              127.0.0.1
+            </span>
+          </div>
 
-        {/* Main Headline - Static and elegant */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[80px] font-medium tracking-[-0.035em] text-zinc-950 leading-[1.05] text-balance mb-4 sm:mb-6 font-sans">
-          Observe wallet rotations. <br />
-          <span className="text-zinc-500 font-normal">Locally.</span>
+          {/* Primary & Supporting Message */}
+          <div className="mt-1.5 flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 leading-relaxed">
+            <span className="text-xs sm:text-[13px] font-mono font-semibold text-zinc-950 shrink-0">
+              Wake runs on your machine.
+            </span>
+            <span className="text-xs sm:text-[12px] text-zinc-600 font-mono">
+              The web interface is served locally through localhost.
+            </span>
+          </div>
+
+          {/* Technical Status Metadata Row */}
+          <div className="mt-2 pt-1.5 border-t border-zinc-100 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10px] font-mono text-zinc-500 uppercase tracking-wide">
+            <span>Documentation only</span>
+            <span className="text-zinc-300 hidden sm:inline" aria-hidden="true">·</span>
+            <span>No site backend</span>
+            <span className="text-zinc-300 hidden sm:inline" aria-hidden="true">·</span>
+            <span>No wallet connection</span>
+          </div>
+        </div>
+
+        {/* Mandatory Headline */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-zinc-950 leading-[1.12] mb-4 sm:mb-5 text-balance">
+          See where capital moves on Robinhood Chain.
         </h1>
 
-        {/* Supporting Text */}
-        <p className="text-base sm:text-lg md:text-xl text-zinc-600 font-normal leading-relaxed max-w-2xl text-balance mb-2.5 sm:mb-3">
-          Wake is a local TypeScript terminal for observing wallet rotations on Robinhood Chain.
+        {/* Mandatory One Concise Explanatory Sentence */}
+        <p className="text-base sm:text-lg md:text-xl text-zinc-600 font-normal leading-relaxed max-w-2xl text-balance mb-8">
+          Wake is local software that lets users observe on-chain capital movement.
         </p>
 
-        {/* Subtle Integrated Local Software Statement */}
-        <p className="text-xs sm:text-sm md:text-base text-zinc-500 font-normal max-w-xl text-balance mb-6 sm:mb-8">
-          Wake is local software. It runs on your own computer.
-        </p>
-
-        {/* CTAs with refined hover states */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto mb-4 sm:mb-5">
+        {/* Primary and Secondary CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto mb-8">
           <Button
             size="lg"
-            onClick={onOpenInstall}
-            className="w-full sm:w-auto rounded-lg bg-zinc-950 hover:bg-black text-white font-medium shadow-2xs hover:shadow-xs hover:-translate-y-[1px] active:translate-y-0 transition-all duration-200 ease-out h-11 px-6 cursor-pointer border border-zinc-900"
+            onClick={() => scrollTo("install")}
+            className="w-full sm:w-auto rounded-md bg-zinc-950 hover:bg-black text-white font-mono text-sm font-medium shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all h-11 px-6 cursor-pointer border border-zinc-900 flex items-center justify-center gap-2"
           >
-            Install Wake
+            <Terminal className="size-4 text-zinc-400" />
+            <span>Install</span>
+            <ArrowDown className="size-3.5 text-zinc-400" />
           </Button>
 
           <Button
             size="lg"
             variant="outline"
-            onClick={handleScrollToDemo}
-            className="w-full sm:w-auto rounded-lg bg-white/80 hover:bg-white hover:border-zinc-400 text-zinc-900 border-zinc-300 font-medium shadow-2xs hover:shadow-xs hover:-translate-y-[1px] active:translate-y-0 transition-all duration-200 ease-out h-11 px-5 cursor-pointer gap-2 group"
+            onClick={() => scrollTo("demo")}
+            className="w-full sm:w-auto rounded-md bg-white hover:bg-zinc-100 text-zinc-900 border-zinc-300 font-mono text-sm font-medium shadow-2xs hover:-translate-y-0.5 active:translate-y-0 transition-all h-11 px-6 cursor-pointer flex items-center justify-center gap-2"
           >
-            <span className="flex items-center justify-center size-5 rounded-full bg-amber-500/10 text-amber-700 group-hover:bg-amber-500/20 group-hover:scale-105 transition-all">
-              <Play className="size-2.5 fill-current ml-0.5" />
-            </span>
-            <span>Watch Demo</span>
-            <ArrowDown className="size-3.5 text-zinc-400 group-hover:text-zinc-700 group-hover:translate-y-0.5 transition-transform" />
+            <Play className="size-3.5 fill-current text-zinc-700" />
+            <span>Watch the demo</span>
           </Button>
-
-          <a
-            href="https://github.com/wealthy-org/Wake"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "lg" }),
-              "w-full sm:w-auto rounded-lg bg-transparent hover:bg-zinc-100/90 hover:border-zinc-400/90 hover:-translate-y-[1px] active:translate-y-0 transition-all duration-200 ease-out text-zinc-800 border-zinc-300 font-medium h-11 px-6 gap-2 cursor-pointer"
-            )}
-          >
-            <GitHubIcon className="size-4 text-zinc-700" />
-            <span>View on GitHub</span>
-          </a>
         </div>
 
-        {/* Small Supporting Line */}
-        <p className="text-xs sm:text-sm text-zinc-500 font-normal tracking-tight text-center">
-          Runs locally · No central server · No wallet connection
-        </p>
-
+        {/* Technical Factual Highlights */}
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-mono text-zinc-500 pt-2 border-t border-zinc-200/80">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-emerald-500" />
+            Runs locally on 127.0.0.1
+          </span>
+          <span className="text-zinc-300 hidden sm:inline">·</span>
+          <span>No wallet connection</span>
+          <span className="text-zinc-300 hidden sm:inline">·</span>
+          <span>Public RPC</span>
+          <span className="text-zinc-300 hidden sm:inline">·</span>
+          <span>Node.js 22+</span>
+        </div>
       </div>
     </section>
   );

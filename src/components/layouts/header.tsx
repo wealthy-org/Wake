@@ -7,18 +7,30 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface HeaderProps {
-  onOpenInstall: () => void;
-  onOpenDocs: () => void;
+  onScrollTo?: (sectionId: string) => void;
 }
 
-export function Header({ onOpenInstall, onOpenDocs }: HeaderProps) {
+export function Header({ onScrollTo }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (onScrollTo) {
+      onScrollTo(id);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-200/40 bg-[#fafaf9]/90 backdrop-blur-xs transition-colors shrink-0">
-      <div className="mx-auto flex h-16 sm:h-20 max-w-[1200px] items-center justify-between px-6 sm:px-8">
-        {/* Left: Simply Wake */}
-        <div className="flex items-center">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-[#fafaf9]/95 backdrop-blur-md transition-colors shrink-0">
+      <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6 sm:px-8">
+        {/* Left: Wake Identity */}
+        <div className="flex items-center gap-4">
           <Link
             href="/"
             className="flex items-center transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-zinc-950 focus-visible:outline-offset-4 rounded-md"
@@ -26,50 +38,102 @@ export function Header({ onOpenInstall, onOpenDocs }: HeaderProps) {
           >
             <WakeLogo />
           </Link>
+          <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-mono font-medium text-zinc-600 bg-zinc-200/60 rounded border border-zinc-300/60">
+            <span className="size-1.5 rounded-full bg-emerald-500" />
+            Local Software
+          </span>
         </div>
 
-        {/* Right: Docs, GitHub, Install Wake */}
+        {/* Desktop Nav: Exactly technical documentation links */}
         <nav
-          className="hidden md:flex items-center gap-7 text-sm font-normal text-zinc-600"
+          className="hidden md:flex items-center gap-6 text-xs font-mono font-medium text-zinc-600"
           aria-label="Main Navigation"
         >
-          <button
-            type="button"
-            onClick={onOpenDocs}
-            className="group relative py-1 transition-all duration-180 ease-out hover:text-zinc-950 hover:translate-x-[0.5px] focus-visible:outline-2 focus-visible:outline-zinc-950 focus-visible:outline-offset-2 rounded cursor-pointer"
+          <a
+            href="#what-you-see"
+            onClick={(e) => handleNavClick(e, "what-you-see")}
+            className="hover:text-zinc-950 transition-colors py-1 cursor-pointer"
           >
-            <span>Docs</span>
-            <span className="absolute bottom-0 left-0 right-0 h-px bg-zinc-950 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left opacity-60 pointer-events-none" />
-          </button>
+            What you see
+          </a>
+          <a
+            href="#install"
+            onClick={(e) => handleNavClick(e, "install")}
+            className="hover:text-zinc-950 transition-colors py-1 cursor-pointer"
+          >
+            Install
+          </a>
+          <a
+            href="#demo"
+            onClick={(e) => handleNavClick(e, "demo")}
+            className="hover:text-zinc-950 transition-colors py-1 cursor-pointer"
+          >
+            Demo
+          </a>
+          <a
+            href="#architecture"
+            onClick={(e) => handleNavClick(e, "architecture")}
+            className="hover:text-zinc-950 transition-colors py-1 cursor-pointer"
+          >
+            Architecture
+          </a>
+          <a
+            href="#limits"
+            onClick={(e) => handleNavClick(e, "limits")}
+            className="hover:text-zinc-950 transition-colors py-1 cursor-pointer"
+          >
+            Limits
+          </a>
+          <a
+            href="#faq"
+            onClick={(e) => handleNavClick(e, "faq")}
+            className="hover:text-zinc-950 transition-colors py-1 cursor-pointer"
+          >
+            FAQ
+          </a>
+
+          <div className="h-4 w-px bg-zinc-300" aria-hidden="true" />
 
           <a
             href="https://github.com/wealthy-org/Wake"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative py-1 inline-flex items-center gap-1.5 transition-all duration-180 ease-out hover:text-zinc-950 hover:translate-x-[0.5px] focus-visible:outline-2 focus-visible:outline-zinc-950 focus-visible:outline-offset-2 rounded"
+            className="inline-flex items-center gap-1.5 hover:text-zinc-950 transition-colors py-1"
           >
-            <GitHubIcon className="size-4 text-zinc-400 group-hover:text-zinc-800 transition-colors duration-180" />
+            <GitHubIcon className="size-3.5 text-zinc-500" />
             <span>GitHub</span>
-            <span className="absolute bottom-0 left-0 right-0 h-px bg-zinc-950 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left opacity-60 pointer-events-none" />
           </a>
 
           <Button
             size="sm"
-            onClick={onOpenInstall}
-            className="rounded-lg bg-zinc-950 hover:bg-black text-white font-medium shadow-2xs hover:shadow-xs hover:-translate-y-[1px] active:translate-y-0 transition-all duration-200 ease-out h-9 px-4 cursor-pointer border border-zinc-900"
+            onClick={() => {
+              const el = document.getElementById("install");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="rounded-md bg-zinc-950 hover:bg-black text-white text-xs font-mono font-medium h-8 px-3.5 cursor-pointer border border-zinc-900 shadow-2xs hover:shadow-xs transition-all"
           >
             Install Wake
           </Button>
         </nav>
 
         {/* Mobile Menu Toggle */}
-        <div className="flex md:hidden items-center">
+        <div className="flex md:hidden items-center gap-2">
+          <Button
+            size="sm"
+            onClick={() => {
+              const el = document.getElementById("install");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="rounded-md bg-zinc-950 hover:bg-black text-white text-xs font-mono font-medium h-8 px-3 cursor-pointer"
+          >
+            Install
+          </Button>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
-            className="p-2 rounded-lg text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 transition-colors focus-visible:outline-2 focus-visible:outline-zinc-950 cursor-pointer"
+            className="p-1.5 rounded-md text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/60 transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -78,39 +142,60 @@ export function Header({ onOpenInstall, onOpenDocs }: HeaderProps) {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-zinc-200/60 bg-[#fafaf9] px-6 py-5 shadow-xs animate-in slide-in-from-top-1 duration-150">
-          <nav className="flex flex-col gap-4 text-sm font-normal text-zinc-700">
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenDocs();
-              }}
-              className="py-2 text-left hover:text-zinc-950 cursor-pointer"
-            >
-              Docs
-            </button>
-
+        <div className="md:hidden border-b border-zinc-200 bg-[#fafaf9] px-6 py-4 shadow-sm animate-in slide-in-from-top-1 duration-150">
+          <nav className="flex flex-col gap-3 font-mono text-xs text-zinc-700">
             <a
-              href="https://github.com/wealthy-org/Wake"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 py-2 hover:text-zinc-950"
+              href="#what-you-see"
+              onClick={(e) => handleNavClick(e, "what-you-see")}
+              className="py-1.5 hover:text-zinc-950 cursor-pointer"
             >
-              <GitHubIcon className="size-4 text-zinc-400" />
-              <span>GitHub</span>
+              What you see
             </a>
-
-            <div className="pt-2 border-t border-zinc-200/40">
-              <Button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenInstall();
-                }}
-                className="w-full rounded-lg bg-zinc-950 hover:bg-black text-white h-10 font-medium cursor-pointer"
+            <a
+              href="#install"
+              onClick={(e) => handleNavClick(e, "install")}
+              className="py-1.5 hover:text-zinc-950 cursor-pointer"
+            >
+              Install
+            </a>
+            <a
+              href="#demo"
+              onClick={(e) => handleNavClick(e, "demo")}
+              className="py-1.5 hover:text-zinc-950 cursor-pointer"
+            >
+              Demo
+            </a>
+            <a
+              href="#architecture"
+              onClick={(e) => handleNavClick(e, "architecture")}
+              className="py-1.5 hover:text-zinc-950 cursor-pointer"
+            >
+              Architecture
+            </a>
+            <a
+              href="#limits"
+              onClick={(e) => handleNavClick(e, "limits")}
+              className="py-1.5 hover:text-zinc-950 cursor-pointer"
+            >
+              Honest limits
+            </a>
+            <a
+              href="#faq"
+              onClick={(e) => handleNavClick(e, "faq")}
+              className="py-1.5 hover:text-zinc-950 cursor-pointer"
+            >
+              FAQ
+            </a>
+            <div className="pt-2 border-t border-zinc-200 flex items-center justify-between">
+              <a
+                href="https://github.com/wealthy-org/Wake"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 py-1 text-zinc-700 hover:text-zinc-950"
               >
-                Install Wake
-              </Button>
+                <GitHubIcon className="size-3.5 text-zinc-500" />
+                <span>GitHub Repository</span>
+              </a>
             </div>
           </nav>
         </div>

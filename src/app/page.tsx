@@ -1,43 +1,56 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Header, Footer } from "@/components/layouts";
-import { Hero, NetworkSection } from "@/components/sections";
-import { InstallModal, DocsModal } from "@/components/modals";
+import {
+  Hero,
+  WhatYouSee,
+  InstallSection,
+  DemoSection,
+  ChainReadingSection,
+  HonestLimits,
+  FAQSection,
+} from "@/components/sections";
 
 export default function Home() {
-  const [installModalOpen, setInstallModalOpen] = useState(false);
-  const [docsModalOpen, setDocsModalOpen] = useState(false);
+  const handleScrollTo = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#fafaf9] text-zinc-900 selection:bg-zinc-950 selection:text-white antialiased">
-      {/* 1. Header (fixed height: 4rem on mobile, 5rem on desktop) */}
-      <Header
-        onOpenInstall={() => setInstallModalOpen(true)}
-        onOpenDocs={() => setDocsModalOpen(true)}
-      />
+    <div className="flex flex-col min-h-screen bg-[#fafaf9] text-zinc-900 selection:bg-zinc-900 selection:text-zinc-50 antialiased">
+      {/* Navigation Header */}
+      <Header onScrollTo={handleScrollTo} />
 
-      {/* 2. Main content area (Hero fits 1st screen on desktop, seamlessly scrollable into Network visualization demo) */}
+      {/* Main Documentation Content — Strictly ordered per product brief */}
       <main className="flex-1 flex flex-col w-full">
-        <Hero onOpenInstall={() => setInstallModalOpen(true)} />
-        <NetworkSection />
+        {/* 1. HERO */}
+        <Hero />
+
+        {/* 2. WHAT YOU SEE */}
+        <WhatYouSee />
+
+        {/* 3. INSTALL IN 3 STEPS */}
+        <InstallSection />
+
+        {/* 4. DEMO */}
+        <DemoSection />
+
+        {/* 5. HOW IT READS THE CHAIN */}
+        <ChainReadingSection />
+
+        {/* 6. HONEST LIMITS */}
+        <HonestLimits />
+
+        {/* 7. FAQ */}
+        <FAQSection />
       </main>
 
-      {/* 3. Modern Technical Footer (Zero AI slop, fully wired functional links) */}
-      <Footer
-        onOpenInstall={() => setInstallModalOpen(true)}
-        onOpenDocs={() => setDocsModalOpen(true)}
-      />
-
-      {/* Accessible Modals */}
-      <InstallModal
-        isOpen={installModalOpen}
-        onClose={() => setInstallModalOpen(false)}
-      />
-      <DocsModal
-        isOpen={docsModalOpen}
-        onClose={() => setDocsModalOpen(false)}
-      />
+      {/* 8. FOOTER */}
+      <Footer />
     </div>
   );
 }

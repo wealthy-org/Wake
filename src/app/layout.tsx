@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wake — Local-First On-Chain Observation Terminal",
+  title: "Wake — On-Chain Observation Terminal for Robinhood Chain",
   description:
-    "Wake is a local TypeScript terminal for observing wallet rotations on Robinhood Chain. Runs locally with no central server and no wallet connection.",
+    "See where capital moves on Robinhood Chain. Wake is local software that lets users observe on-chain capital movement. Runs on your own computer. Documentation only.",
 };
 
 export default function RootLayout({
